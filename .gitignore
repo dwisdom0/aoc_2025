@@ -11,3 +11,4 @@ wheels/
 
 # AOC inputs
 **/input.txt
+**/test_input.txt
