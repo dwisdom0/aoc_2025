@@ -26,19 +26,18 @@ def get_joltage(bank: list[int]) -> int:
     joltage_digits = ""
     start_idx = 0
 
-
     # have to pick the max in a sliding window
     # because we have to leave ourselves at least enough
     # digits to turn on all 12
     # so like if we have 15 digits
     # we have to pick the largest in the first 3
-    # 
+    #
     # |||
     # ################
-    #  ^max   
+    #  ^max
     # maybe it's here
     # now we have to pick the largest from there to the first 4
-    # 
+    #
     #   ||
     # ################
     #   ^max

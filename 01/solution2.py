@@ -1,4 +1,3 @@
-from copy import deepcopy
 
 
 def read_input(fpath: str) -> list[tuple[str, int]]:
@@ -33,10 +32,8 @@ def rotate(dial: int, direction: str, amount: int) -> tuple[int, int]:
 
         if dial + amount >= 100:
             zeros += (dial + amount) // 100
-    
-    
-    return new_dial, zeros
 
+    return new_dial, zeros
 
 
 if __name__ == "__main__":
@@ -44,9 +41,9 @@ if __name__ == "__main__":
     dial = 50
     num_zeros = 0
     for op in data:
-        #print(f'\n{dial=}')
+        # print(f'\n{dial=}')
         dial, zeros = rotate(dial, *op)
-        #print(f'{dial=}')
+        # print(f'{dial=}')
         num_zeros += zeros
-        #print(f'{num_zeros=}')
+        # print(f'{num_zeros=}')
     print(num_zeros)
