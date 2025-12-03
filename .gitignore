@@ -9,6 +9,9 @@ wheels/
 # Virtual environments
 .venv
 
+# Ruff
+.ruff_cache
+
 # AOC inputs
 **/input.txt
 **/test_input.txt
