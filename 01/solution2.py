@@ -1,5 +1,3 @@
-
-
 def read_input(fpath: str) -> list[tuple[str, int]]:
     lines = []
     with open(fpath, "r") as f:

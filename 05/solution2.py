@@ -47,7 +47,9 @@ def find_overlaps(
     return overlaps
 
 
-def merge_ranges(ranges: list[tuple[int, int]], debug: bool=False) -> list[tuple[int, int]]:
+def merge_ranges(
+    ranges: list[tuple[int, int]], debug: bool = False
+) -> list[tuple[int, int]]:
     overlaps = find_overlaps(ranges)
     if debug:
         print(f"{ranges=}")
