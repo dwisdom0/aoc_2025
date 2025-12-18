@@ -1,16 +1,17 @@
 from collections import deque
 
+
 def read_input(fpath: str) -> list[str]:
-    with open(fpath, 'r') as f:
+    with open(fpath, "r") as f:
         lines = f.readlines()
-    
+
     data = [line.strip() for line in lines]
     return data
 
 
 def solve(manifold: list[str]) -> int:
     hit_splitters = set()
-    start_idx = manifold[0].index('S')
+    start_idx = manifold[0].index("S")
 
     beams = deque()
     beams.append((0, start_idx))
@@ -26,35 +27,28 @@ def solve(manifold: list[str]) -> int:
 
         # if we hit a splitter, this beam is done
         # and we have to start two new beams
-        if manifold[new_row][col] == '^':
+        if manifold[new_row][col] == "^":
             if (new_row, col) in hit_splitters:
                 continue
             hit_splitters.add((new_row, col))
             try:
-                beams.append((new_row, col-1))
+                beams.append((new_row, col - 1))
             except IndexError:
                 pass
             try:
-                beams.append((new_row, col+1))
+                beams.append((new_row, col + 1))
             except IndexError:
                 pass
         else:
             beams.append((new_row, col))
-            
+
     return len(hit_splitters)
 
 
-
-
-
-
-
-
-
-
 def main():
-    data = read_input('input.txt')
+    data = read_input("input.txt")
     print(solve(data))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()

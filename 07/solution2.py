@@ -1,91 +1,58 @@
-from tqdm import tqdm
-from copy import deepcopy
-from collections import deque, defaultdict
-from dataclasses import dataclass
-
-@dataclass
-class Timeline:
-    cur_step: tuple[int, int]
-    hit_splitters: set
-
 def read_input(fpath: str) -> list[str]:
-    with open(fpath, 'r') as f:
+    with open(fpath, "r") as f:
         lines = f.readlines()
-    
+
     data = [line.strip() for line in lines]
     return data
 
 
-
-
 def solve(manifold: list[str]) -> int:
-    start_idx = manifold[0].index('S')
+    # TODO: this hangs
+    # might have to detect cycles or do a dynamic programming
+    # like bottom-up thing
+    start_col = manifold[0].index("S")
 
-    beams = deque()
-    beams.append((0, start_idx))
+    beams = []
+    beams.append((0, start_col))
 
-    timelines = [Timeline(cur_step=(0, start_idx), hit_splitters=set())]
-    num_timelines = 0
-    max_iter = 100
+    completed_beams = 0
 
-    for _ in tqdm(range(150)):
-        print(f"{len(timelines)=}")
-        if len(timelines) == 0:
-            return num_timelines
-        new_timelines = []
-        for timeline in timelines:
-            new_row = timeline.cur_step[0] + 1
-            col = timeline.cur_step[1]
+    while len(beams):
+        if len(beams) == 0:
+            break
+        beam_pos = beams.pop(-1)
+        new_row = beam_pos[0] + 1
+        col = beam_pos[1]
 
-            # if we hit the bottom, this timeline is done
-            if new_row == len(manifold) - 1:
-                num_timelines += 1
-                continue
+        # if we hit the bottom, this timeline is done
+        if new_row == len(manifold) - 1:
+            completed_beams += 1
+            continue
 
-            # if we hit a splitter, this beam is done
-            # and we have to start two new beams
-            # by copying the history of the current timeline
-            # and adding on the next step
-            if manifold[new_row][col] == '^':
-                if (new_row, col) in timeline.hit_splitters:
-                    print(f'already hit: ({new_row}, {col})')
-                    continue
-                timeline.hit_splitters.add((new_row, col))
+        # if we hit a splitter, this beam is done
+        # and we have to start two new beams
+        if manifold[new_row][col] == "^":
+            beams.append((new_row, col - 1))
+            beams.append((new_row, col + 1))
 
-                # make a copy for the right side
-                timeline_r = deepcopy(timeline)
-                timeline_r.cur_step = (new_row, col+1)
-                new_timelines.append(timeline_r)
+        # if we didn't hit a splitter, continue searching downward
+        else:
+            beams.append((new_row, col))
 
-                # use the current timeline as the left side
-                timeline.cur_step = (new_row, col-1)
-                new_timelines.append(timeline)
-
-
-
-
-            # if we didn't hit a splitter, continue searching downward
-            else:
-                timeline.cur_step = (new_row, col)
-                new_timelines.append(timeline)
-
-        timelines = deepcopy(new_timelines)
-        max_iter -= 1
-            
-    return num_timelines
-
-
-
-
-
-
-
-
+    return completed_beams
 
 
 def main():
-    data = read_input('input.txt')
+    # it works correctly for the test input
+    # but it hangs on the real input
+    # so I probably have to detect cycles or something?
+    # I'm not sure how a cycle would even happen though
+    # since it's always going down
+    # maybe it's like fib where it's just repeating a ton of work
+    # once it gets near the bottom
+    data = read_input("input.txt")
     print(solve(data))
 
-if __name__ == '__main__':
+
+if __name__ == "__main__":
     main()
