@@ -47,8 +47,6 @@ def solve(data: list[tuple[int, int]]) -> int:
     # I feel like there must be a better way
     # that doesn't require explictly modeling the whole thing
 
-
-
     max_area = 0
     for c0 in tqdm(data, ascii=True):
         for c1 in data:

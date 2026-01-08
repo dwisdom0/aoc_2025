@@ -1,5 +1,3 @@
-
-
 def read_input(fpath: str) -> dict[str, list[str]]:
     with open(fpath, "r") as f:
         lines = [line.strip() for line in f.readlines()]
